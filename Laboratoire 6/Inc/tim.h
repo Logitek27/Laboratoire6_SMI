@@ -62,7 +62,7 @@ extern void _Error_Handler(char *, int);
 void MX_TIM2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
+void BoucleDAttente(short);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
