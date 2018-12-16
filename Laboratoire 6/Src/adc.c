@@ -143,7 +143,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc1);
 
   /* USER CODE BEGIN ADC1_MspInit 1 */
-
+	__HAL_DMA_ENABLE(adcHandle->DMA_Handle);
   /* USER CODE END ADC1_MspInit 1 */
   }
 }

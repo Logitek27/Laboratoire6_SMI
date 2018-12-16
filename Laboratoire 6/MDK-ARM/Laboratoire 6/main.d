@@ -35,3 +35,4 @@ laboratoire 6\main.o: ../Inc/adc.h
 laboratoire 6\main.o: ../Inc/dma.h
 laboratoire 6\main.o: ../Inc/tim.h
 laboratoire 6\main.o: ../Inc/gpio.h
+laboratoire 6\main.o: ../Inc/lcd.h
