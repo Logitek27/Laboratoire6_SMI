@@ -84,9 +84,6 @@ void TIM2_IRQHandler(void)
 	MsCnt++;
 	if(MsCnt==NBECHANTILLON){
 		endOfSamplingFlag=FLAG_Data_Sampled_Ready;
-	}
-	else if(MsCnt==2*NBECHANTILLON){
-		endOfSamplingFlag=FLAG_Data_Sampled_Ready;
 		MsCnt=0;
 	}
 
