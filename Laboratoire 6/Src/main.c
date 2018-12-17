@@ -58,10 +58,6 @@
 extern TIM_HandleTypeDef htim1;
 uint16_t pData[NBECHANTILLON];  //trop gros à définir avec un malloc
 uint8_t endOfSamplingFlag;
-
-double RMS=0;
-double test=0;
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -110,8 +106,8 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 	InitLCD();
-	HAL_TIM_Base_Start_IT(&htim2);
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)(pData), NBECHANTILLON);
+	HAL_TIM_Base_Start_IT(&htim2);							
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)(pData), NBECHANTILLON);  //configure Data pointer for ADC with DMA
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -119,30 +115,27 @@ int main(void)
 	//float RMS=0;
 	double Somme_Carre=0;
 	int Nb_Ech=NBECHANTILLON;
-
-
+	double RMS=0;
 
   while (1)
   {
 
 		if(endOfSamplingFlag==FLAG_Data_Sampled_Ready){
-				HAL_TIM_Base_Start_IT(&htim2); //désactive interrupt pour protéger les données
+				HAL_TIM_Base_Start_IT(&htim2); 					//disable interrupt to protect datas sampled
 				Somme_Carre=0;
 				RMS=0;
 				uint16_t i = 0;
 				double temp=0;
-				for(i=0;i<Nb_Ech;i++){
+				for(i=0;i<Nb_Ech;i++){									//calculation of square sum
 					temp=pData[i]*3.3/4096;
 					Somme_Carre+=temp*temp;
 				}
-								
-				test=(double)(Somme_Carre/256);
 				
-			RMS=sqrt(test);
-			//afficher RMS
-			AfficheRMS(RMS);
-			endOfSamplingFlag=FLAG_Data_Sampled_NotReady;	
-			HAL_TIM_Base_Start_IT(&htim2); //récatives interrupt, données plus utiles
+				RMS=sqrt((double)(Somme_Carre/256));			//calculation of RMS
+				AfficheRMS(RMS);													//Print RMS on LCD
+				
+				endOfSamplingFlag=FLAG_Data_Sampled_NotReady;		//Data
+				HAL_TIM_Base_Start_IT(&htim2); 									//enable interrupt to save new datas : new rms in calcuation
 		}
 
   /* USER CODE END WHILE */

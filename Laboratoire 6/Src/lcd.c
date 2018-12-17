@@ -153,6 +153,6 @@ void ClearNbCharacterLine2LCD(char Nb)
 
 void AfficheRMS(double flottant){
 	ClearNbCharacterLine2LCD(5);  //clear 5 character at the end of the 2nd line
-	Affichedouble(flottant);		//write flottant on the screen, format : A.AA
-		WriteCommand(0x256); //write V (Volts)
+	Affichedouble(flottant);			//write flottant on the screen, format : A.AA
+	WriteCommand(0x256); 					//write V (Volts)
 }

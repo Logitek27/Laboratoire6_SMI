@@ -83,14 +83,16 @@ void TIM2_IRQHandler(void)
   /* USER CODE BEGIN TIM2_IRQn 0 */
 	MsCnt++;
 	if(MsCnt==NBECHANTILLON){
-		endOfSamplingFlag=FLAG_Data_Sampled_Ready;
+		endOfSamplingFlag=FLAG_Data_Sampled_Ready;   //Set flag when Sampling ends
 		MsCnt=0;
+	}else{
+		HAL_ADC_Start(&hadc1);
 	}
 
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
-	HAL_ADC_Start(&hadc1);
+
   /* USER CODE END TIM2_IRQn 1 */
 }
 
