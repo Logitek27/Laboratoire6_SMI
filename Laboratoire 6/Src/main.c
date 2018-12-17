@@ -46,6 +46,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "lcd.h"
+#include <stdlib.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -53,6 +54,8 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 extern TIM_HandleTypeDef htim1;
+uint16_t* pData;
+uint8_t endOfSamplingFlag;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,14 +103,37 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
+	pData=malloc(2*NBECHANTILLON*sizeof(uint16_t));
 	InitLCD();
 	HAL_TIM_Base_Start_IT(&htim2);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)(pData), 1000);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	float RMS=0;
+	int Somme_Carre=0;
+	int Nb_Ech=NBECHANTILLON;
+	uint32_t* DataRead=(uint32_t*)pData;
+	int what=0;
   while (1)
   {
+		int what=*DataRead;
+		Somme_Carre=NBECHANTILLON;
+		if(endOfSamplingFlag==FLAG_Data_Sampled_Ready){
+				HAL_TIM_Base_Start_IT(&htim2);
+				Somme_Carre=NBECHANTILLON;
+				RMS=0;
+				DataRead=(uint32_t*)pData;
+				uint16_t i = 0;
+				for(i=0;i<Nb_Ech;i++){
+					//test=*DataRead;
+				}
+				HAL_TIM_Base_Start_IT(&htim2);
+			RMS=Somme_Carre/Nb_Ech;
+			//afficher RMS
+			int what=1;
+		}
 
   /* USER CODE END WHILE */
 

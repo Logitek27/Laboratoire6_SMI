@@ -36,8 +36,13 @@
 #include "stm32f4xx_it.h"
 
 /* USER CODE BEGIN 0 */
+#include "main.h"
+
 unsigned int MsCnt = 0;
 extern ADC_HandleTypeDef hadc1;
+
+extern uint16_t* pData;
+extern uint8_t endOfSamplingFlag;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -77,9 +82,14 @@ void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
 	MsCnt++;
-	if(MsCnt==10000){
-		
+	if(MsCnt==NBECHANTILLON){
+		endOfSamplingFlag=FLAG_Data_Sampled_Ready;
 	}
+	else if(MsCnt==2*NBECHANTILLON){
+		endOfSamplingFlag=FLAG_Data_Sampled_Ready;
+		MsCnt=0;
+	}
+
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
