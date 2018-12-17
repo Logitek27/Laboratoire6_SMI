@@ -42,7 +42,7 @@ void InitLCD()
 	WriteCommand(0x001); //Clear display
 	WriteCommand(0x002); //place cursor at the beginning
 	WriteCommand(0x038); //function set 8-bits operation 2 lines display 5x8 character font
-	WriteCommand(0x00E); // display on, cursor on, blink off
+	WriteCommand(0x00C); // display on, cursor off, blink off
 	WriteCommand(0x006); //Increment, display shift
 	WriteCommand(0x24E); //write 'N'
 	WriteCommand(0x24C); //write 'L'
@@ -120,4 +120,39 @@ void WriteTimeLCD(unsigned int time)
 	WriteNumberLCD(time1);
 	WriteNumberLCD(time0);
 
+}
+
+void Affichedouble(double flottant){  //affiche double
+	char IntPart = (char)flottant;      //get Integer part
+	WriteNumberLCD(IntPart);						//write Integer part
+	double tenthf = (double)((flottant-IntPart)*10);  //get tenth part
+	int tenth = (int)tenthf;
+	double hundredthf = (double)((flottant-IntPart)*10);  //get hundredth part
+	int hundredth = (int)hundredthf;
+	WriteCommand(0x22E); 														//write "."
+	WriteNumberLCD(tenth);													//write tenth part
+	WriteNumberLCD(hundredth);											//write hendredth part
+}
+
+void ClearNbCharacterLine2LCD(char Nb)
+{
+	/* 
+	*  Clear every character on the 2nd line
+	*/
+	char u8Cnt = 0;
+
+	WriteCommand(0x00C0); // set DDRAM address to 40: moves cursor to the start of 2nd line.
+	for(u8Cnt=0;u8Cnt<Nb;u8Cnt++)     //clear 2nd line
+	{
+		WriteCommand(0x0220);  //write ' ' (space)
+	}
+	WriteCommand(0x00C0); // set DDRAM address to 40: moves cursor to the start of 2nd line.
+	
+	positionLine2 = 0;
+}
+
+void AfficheRMS(double flottant){
+	ClearNbCharacterLine2LCD(5);  //clear 5 character at the end of the 2nd line
+	Affichedouble(flottant);		//write flottant on the screen, format : A.AA
+		WriteCommand(0x256); //write V (Volts)
 }

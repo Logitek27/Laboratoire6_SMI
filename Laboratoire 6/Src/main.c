@@ -47,7 +47,8 @@
 /* USER CODE BEGIN Includes */
 #include "lcd.h"
 #include <stdlib.h>
-#include "math.h"
+#include <stdio.h>
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -134,15 +135,14 @@ int main(void)
 					temp=pData[i]*3.3/4096;
 					Somme_Carre+=temp*temp;
 				}
-				endOfSamplingFlag=FLAG_Data_Sampled_NotReady;
-				HAL_TIM_Base_Start_IT(&htim2); //récatives interrupt, données plus utiles
-				
+								
 				test=(double)(Somme_Carre/256);
 				
 			RMS=sqrt(test);
 			//afficher RMS
-			
-			
+			AfficheRMS(RMS);
+			endOfSamplingFlag=FLAG_Data_Sampled_NotReady;	
+			HAL_TIM_Base_Start_IT(&htim2); //récatives interrupt, données plus utiles
 		}
 
   /* USER CODE END WHILE */
