@@ -60,7 +60,7 @@
 
 #define FLAG_Data_Sampled_NotReady 0U
 #define FLAG_Data_Sampled_Ready 1U
-#define NBECHANTILLON 1000
+#define NBECHANTILLON 256
 
 /* USER CODE END Private defines */
 

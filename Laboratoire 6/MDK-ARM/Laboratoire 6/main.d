@@ -37,3 +37,4 @@ laboratoire 6\main.o: ../Inc/tim.h
 laboratoire 6\main.o: ../Inc/gpio.h
 laboratoire 6\main.o: ../Inc/lcd.h
 laboratoire 6\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+laboratoire 6\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
