@@ -58,6 +58,8 @@
 extern TIM_HandleTypeDef htim1;
 uint16_t pData[NBECHANTILLON];  //trop gros à définir avec un malloc
 uint8_t endOfSamplingFlag;
+
+double RMS=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -115,7 +117,7 @@ int main(void)
 	//float RMS=0;
 	double Somme_Carre=0;
 	int Nb_Ech=NBECHANTILLON;
-	double RMS=0;
+	//double RMS=0;
 
   while (1)
   {
@@ -134,7 +136,8 @@ int main(void)
 				RMS=sqrt((double)(Somme_Carre/256));			//calculation of RMS
 				AfficheRMS(RMS);													//Print RMS on LCD
 				
-				endOfSamplingFlag=FLAG_Data_Sampled_NotReady;		//Data
+				endOfSamplingFlag=FLAG_Data_Sampled_NotReady;				//Data
+				HAL_Delay(300);  																//wait 300ms before next acquisition
 				HAL_TIM_Base_Start_IT(&htim2); 									//enable interrupt to save new datas : new rms in calcuation
 		}
 

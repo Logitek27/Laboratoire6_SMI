@@ -15,5 +15,5 @@ void WriteAsciiCharacterLCD(char asciiChar);
 void ClearLine2LCD(void);
 void WriteTimeLCD(unsigned int);
 void AfficheFloat(float flottant);
-
+void AfficheRMS(double);
 #endif /* LCD_H_ */

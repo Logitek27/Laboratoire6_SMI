@@ -123,15 +123,13 @@ void WriteTimeLCD(unsigned int time)
 }
 
 void Affichedouble(double flottant){  //affiche double
+	flottant = flottant-0.1;						//suppress bias
 	char IntPart = (char)flottant;      //get Integer part
 	WriteNumberLCD(IntPart);						//write Integer part
 	double tenthf = (double)((flottant-IntPart)*10);  //get tenth part
-	int tenth = (int)tenthf;
-	double hundredthf = (double)((flottant-IntPart)*10);  //get hundredth part
-	int hundredth = (int)hundredthf;
+	int tenth = (int)(tenthf);
 	WriteCommand(0x22E); 														//write "."
 	WriteNumberLCD(tenth);													//write tenth part
-	WriteNumberLCD(hundredth);											//write hendredth part
 }
 
 void ClearNbCharacterLine2LCD(char Nb)

@@ -82,7 +82,7 @@ void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
 	MsCnt++;
-	if(MsCnt==NBECHANTILLON){
+	if(MsCnt>=NBECHANTILLON){
 		endOfSamplingFlag=FLAG_Data_Sampled_Ready;   //Set flag when Sampling ends
 		MsCnt=0;
 	}else{
